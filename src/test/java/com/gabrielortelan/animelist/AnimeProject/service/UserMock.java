@@ -19,4 +19,9 @@ public class UserMock {
 
         return userList;
     }
+
+    public static User createUser(){
+        User user = new User("1","Gabriel","gabriel@gmail.com");
+        return user;
+    }
 }
