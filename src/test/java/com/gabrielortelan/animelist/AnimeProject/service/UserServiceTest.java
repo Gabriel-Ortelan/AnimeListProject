@@ -3,6 +3,7 @@ package com.gabrielortelan.animelist.AnimeProject.service;
 import com.gabrielortelan.animelist.AnimeProject.domain.User;
 import com.gabrielortelan.animelist.AnimeProject.repository.UserRepository;
 import com.gabrielortelan.animelist.AnimeProject.services.UserService;
+import com.gabrielortelan.animelist.AnimeProject.services.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
@@ -36,8 +36,8 @@ public class UserServiceTest {
     @BeforeEach
     void setUp(){
 
-        existingId = "1";
-        nonExistingId = "2";
+        existingId = "2";
+        nonExistingId = "6";
 
         userList = UserMock.createUserList();
         user = UserMock.createUser();
@@ -48,9 +48,10 @@ public class UserServiceTest {
     void findByIdShouldReturnUserWhenIdExists(){
         when(userRepository.findAll()).thenReturn(userList);
 
-        User result = userService.findById(nonExistingId);
+        User result = userService.findById(existingId);
 
         Assertions.assertNotNull(result);
+        Assertions.assertEquals(userList.get(0),result);
     }
 
     @Test
@@ -66,8 +67,16 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("inser deve inserir um usuario")
-    public void insertShouldInsertAnUser(){
+    @DisplayName("findById deve retornar uma excessao quando id nao existir")
+    void findByIdShouldThrowExceptionWhenIdNonExistis(){
+        Assertions.assertThrows(ObjectNotFoundException.class, () -> {
+            userService.findById(existingId);
+        });
+    }
+
+    @Test
+    @DisplayName("insert deve inserir um usuario")
+    void insertShouldInsertAnUser(){
         when(userRepository.insert(user)).thenReturn(user);
 
         List<User> response = new ArrayList<>();
@@ -77,4 +86,5 @@ public class UserServiceTest {
         Assertions.assertEquals(response.get(0), user);
         Assertions.assertEquals(User.class, response.get(0).getClass());
     }
+
 }
