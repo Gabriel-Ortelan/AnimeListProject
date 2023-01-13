@@ -21,7 +21,7 @@ public class UserMock {
     }
 
     public static User createUser(){
-        User user = new User("1","Gabriel","gabriel@gmail.com");
+        User user = new User("2","Gabriel","gabriel@gmail.com");
         return user;
     }
 }
