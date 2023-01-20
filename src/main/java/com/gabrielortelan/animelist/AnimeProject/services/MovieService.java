@@ -1,8 +1,10 @@
 package com.gabrielortelan.animelist.AnimeProject.services;
 
+import com.gabrielortelan.animelist.AnimeProject.domain.Movie;
 import com.gabrielortelan.animelist.AnimeProject.domain.User;
+import com.gabrielortelan.animelist.AnimeProject.dto.MovieDTO;
 import com.gabrielortelan.animelist.AnimeProject.dto.UserDTO;
-import com.gabrielortelan.animelist.AnimeProject.repository.UserRepository;
+import com.gabrielortelan.animelist.AnimeProject.repository.MovieRepository;
 import com.gabrielortelan.animelist.AnimeProject.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,28 +12,28 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserService {
+public class MovieService {
 
     @Autowired
-    private UserRepository repository;
+    private MovieRepository repository;
 
-    public List<User> findAll(){
+    public List<Movie> findAll(){
         return repository.findAll();
     }
 
-    public User findById(String id){
-        List<User> users = repository.findAll();
-        User user = users.stream()
+    public Movie findById(String id){
+        List<Movie> movies = repository.findAll();
+        Movie movie = movies.stream()
                 .filter(x -> id.equals(x.getId()))
                 .findFirst()
                 .orElse(null);
-        if (user == null){
+        if (movie == null){
             throw new ObjectNotFoundException("Objeto não encontrado");
         }
-        return user;
+        return movie;
     }
 
-    public User insert(User obj){
+    public Movie insert(Movie obj){
         return repository.insert(obj);
     }
 
@@ -43,7 +45,7 @@ public class UserService {
         repository.deleteById(id);
     }
 
-    public User fromDTO(UserDTO objDTO){
-        return new User(objDTO.getId(), objDTO.getName(), objDTO.getEmail());
+    public Movie fromDTO(MovieDTO objDTO){
+        return new Movie(objDTO.getName(), objDTO.getName());
     }
 }
