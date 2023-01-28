@@ -11,7 +11,7 @@
 
 ## Recursos utilizados
 • CRUD em Spring Boot<br>
-• Consulta de API de terceiros
-• Conexão com banco de dados MongoDB
-• POO
+• Consulta de API de terceiros<br>
+• Conexão com banco de dados MongoDB<br>
+• POO<br>
 • Padrão MVC
